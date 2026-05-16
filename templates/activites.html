@@ -1,0 +1,27 @@
+<section class="section-dark py-5" id="activites">
+  <div class="container">
+    <div class="section-head mb-4">
+      <p class="section-kicker mb-1">Disciplines</p>
+      <h2 class="section-title">Nos activites phares</h2>
+    </div>
+
+    <div class="row g-3">
+      {% for activite in activites %}
+        <div class="col-12 col-sm-6 col-lg-4">
+          <article class="glass-card h-100 p-3">
+            <h3 class="h5 mb-2">{{ activite.libelle }}</h3>
+            <p class="text-light-subtle mb-0">
+              {{ activite.description|default:"Encadrement expert, progression continue et ambiance motivante."|truncatechars:130 }}
+            </p>
+          </article>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <div class="glass-card p-4">
+            <p class="mb-0 text-light-subtle">Boxe, Cross-training, Yoga, Renforcement, Cardio training et plus encore.</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

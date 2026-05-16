@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Paiement | SportManager{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h1 class="h4 mb-3">Initier un paiement</h1>
+          <p class="mb-1">
+            <span class="fw-semibold">Séance:</span>
+            {{ seance.activite.libelle }} — {{ seance.dateSeance|date:"d/m/Y" }} {{ seance.heureDebut }}–{{ seance.heureFin }}
+          </p>
+          <p class="mb-3">
+            <span class="fw-semibold">Montant:</span>
+            {{ seance.activite.tarifMensuel }} DHS
+          </p>
+
+          {% if paiement_en_attente %}
+            <div class="alert alert-warning" role="alert">
+              Un paiement est deja en attente de validation par l'administrateur.
+              Vous pouvez revenir ici pour suivre le statut.
+            </div>
+          {% endif %}
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.modePaiement.id_for_label }}">Mode de paiement</label>
+              {{ form.modePaiement }}
+              {% if form.modePaiement.errors %}
+                <div class="invalid-feedback d-block">{{ form.modePaiement.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary" type="submit" {% if paiement_en_attente %}disabled{% endif %}>
+                Créer le paiement
+              </button>
+              <a class="btn btn-outline-secondary" href="{% url 'membre_planning' %}">Annuler</a>
+            </div>
+          </form>
+        </div>
+      </div>
+      <p class="text-muted small mt-3 mb-0">
+        Le paiement est créé en statut “En attente” et devra être validé par l’administrateur.
+      </p>
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Comptes | SportManager{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 mb-0">Comptes</h1>
+    <a class="btn btn-primary btn-sm" href="{% url 'admin_compte_create' %}">Nouveau compte</a>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Actif</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+            <tr>
+              <td class="fw-semibold">{{ u.login }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.get_role_display }}</td>
+              <td>
+                <span class="badge {% if u.is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                  {% if u.is_active %}Oui{% else %}Non{% endif %}
+                </span>
+              </td>
+              <td class="text-end">
+                {% if u.id != user.id %}
+                  <form method="post" action="{% url 'admin_compte_delete' u.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-danger" type="submit">Supprimer</button>
+                  </form>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5" class="text-center text-muted py-4">Aucun compte.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+

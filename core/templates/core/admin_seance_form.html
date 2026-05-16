@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Séance | SportManager{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 mb-0">{% if mode == 'edit' %}Modifier la séance{% else %}Nouvelle séance{% endif %}</h1>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'admin_seances' %}">Retour</a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="{{ form.activite.id_for_label }}">Activité</label>
+            {{ form.activite }}
+            {% if form.activite.errors %}<div class="invalid-feedback d-block">{{ form.activite.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="{{ form.coach.id_for_label }}">Coach</label>
+            {{ form.coach }}
+            {% if form.coach.errors %}<div class="invalid-feedback d-block">{{ form.coach.errors }}</div>{% endif %}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label" for="{{ form.dateSeance.id_for_label }}">Date de la séance</label>
+            {{ form.dateSeance }}
+            {% if form.dateSeance.errors %}<div class="invalid-feedback d-block">{{ form.dateSeance.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="{{ form.heureDebut.id_for_label }}">Heure début</label>
+            {{ form.heureDebut }}
+            {% if form.heureDebut.errors %}<div class="invalid-feedback d-block">{{ form.heureDebut.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="{{ form.heureFin.id_for_label }}">Heure fin</label>
+            {{ form.heureFin }}
+            {% if form.heureFin.errors %}<div class="invalid-feedback d-block">{{ form.heureFin.errors }}</div>{% endif %}
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label" for="{{ form.capaciteMax.id_for_label }}">Capacité max</label>
+            {{ form.capaciteMax }}
+            {% if form.capaciteMax.errors %}<div class="invalid-feedback d-block">{{ form.capaciteMax.errors }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <button class="btn btn-primary" type="submit">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

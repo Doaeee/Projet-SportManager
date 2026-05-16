@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Inscrits | SportManager{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="h4 mb-1">Membres inscrits</h1>
+      <div class="text-muted">
+        {{ seance.activite.libelle }} — {{ seance.dateSeance|date:"d/m/Y" }} {{ seance.heureDebut }}–{{ seance.heureFin }}
+      </div>
+    </div>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'coach_planning' %}">Retour</a>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>Membre</th>
+            <th>Login</th>
+            <th>Date d'inscription</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in inscriptions %}
+            <tr>
+              <td class="fw-semibold">{{ i.membre.numMembre }}</td>
+              <td>{{ i.membre.utilisateur.login }}</td>
+              <td>{{ i.dateInscription }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="3" class="text-center text-muted py-4">Aucun inscrit.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+

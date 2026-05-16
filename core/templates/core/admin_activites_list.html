@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Activités | SportManager{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 mb-0">Activités</h1>
+    <a class="btn btn-primary btn-sm" href="{% url 'admin_activite_create' %}">Nouvelle activité</a>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0 align-middle">
+        <thead>
+          <tr>
+            <th style="width: 84px;">Photo</th>
+            <th>Libellé</th>
+            <th>Type</th>
+            <th>Tarif mensuel</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in activites %}
+            <tr>
+              <td>
+                {% if a.image %}
+                  <img
+                    src="{{ a.image.url }}"
+                    alt="Photo {{ a.libelle }}"
+                    class="rounded border"
+                    style="width: 64px; height: 40px; object-fit: cover;"
+                    loading="lazy"
+                  />
+                {% else %}
+                  <div class="text-muted small">—</div>
+                {% endif %}
+              </td>
+              <td>
+                <div class="fw-semibold">{{ a.libelle }}</div>
+                {% if a.description %}
+                  <div class="text-muted small">{{ a.description }}</div>
+                {% endif %}
+              </td>
+              <td>
+                <span class="badge {% if a.typeAcces == 'INTERNE' %}bg-info{% else %}bg-secondary{% endif %}">
+                  {{ a.get_typeAcces_display }}
+                </span>
+              </td>
+              <td>{{ a.tarifMensuel }} DHS</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'admin_activite_edit' a.idActivite %}">Modifier</a>
+                <form method="post" action="{% url 'admin_activite_delete' a.idActivite %}" class="d-inline">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-outline-danger" type="submit">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5" class="text-center text-muted py-4">Aucune activité.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+

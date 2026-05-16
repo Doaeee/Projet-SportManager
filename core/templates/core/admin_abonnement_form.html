@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {% if mode == "edit" %}Modifier abonnement{% else %}Nouvel abonnement{% endif %} | Admin
+{% endblock %}
+
+{% block content %}
+  <div class="card page-hero mb-3">
+    <div class="card-body d-flex align-items-center justify-content-between">
+      <div>
+        <h1 class="h4 mb-1">
+          {% if mode == "edit" %}Modifier abonnement{% else %}Nouvel abonnement{% endif %}
+        </h1>
+        <div class="text-muted">Paramétrez les offres d'abonnement du club.</div>
+      </div>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'admin_abonnements' %}">
+        <i class="bi bi-arrow-left"></i> Retour
+      </a>
+    </div>
+  </div>
+
+  <div class="card card-hover">
+    <div class="card-body">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Libellé</label>
+            {{ form.libelle }}
+            {% if form.libelle.errors %}<div class="invalid-feedback d-block">{{ form.libelle.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Périodicité</label>
+            {{ form.periodicite }}
+            {% if form.periodicite.errors %}<div class="invalid-feedback d-block">{{ form.periodicite.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Prix (DHS)</label>
+            {{ form.prix }}
+            {% if form.prix.errors %}<div class="invalid-feedback d-block">{{ form.prix.errors }}</div>{% endif %}
+          </div>
+          <div class="col-12">
+            <label class="form-label">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}<div class="invalid-feedback d-block">{{ form.description.errors }}</div>{% endif %}
+          </div>
+          <div class="col-12">
+            <label class="form-label">Avantages (un par ligne)</label>
+            {{ form.avantages }}
+            {% if form.avantages.errors %}<div class="invalid-feedback d-block">{{ form.avantages.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Ordre</label>
+            {{ form.ordre }}
+            {% if form.ordre.errors %}<div class="invalid-feedback d-block">{{ form.ordre.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <div class="form-check">
+              {{ form.actif }}
+              <label class="form-check-label ms-1" for="{{ form.actif.id_for_label }}">Actif</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <button class="btn btn-primary" type="submit">
+            {% if mode == "edit" %}Enregistrer{% else %}Créer{% endif %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

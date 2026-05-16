@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">SportManager</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+          {% if user.role == 'MEMBRE' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'membre_dashboard' %}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'membre_planning' %}">Planning</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'membre_abonnements' %}">Abonnements</a>
+            </li>
+          {% elif user.role == 'COACH' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'coach_dashboard' %}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'coach_planning' %}">Mes séances</a>
+            </li>
+          {% elif user.role == 'ADMIN' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin_paiements' %}">Paiements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin_abonnements' %}">Abonnements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin_activites' %}">Activités</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin_seances' %}">Séances</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin_comptes' %}">Comptes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/">Admin Django</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <span class="navbar-text me-3">
+              {{ user.login }} ({{ user.get_role_display }})
+            </span>
+          </li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button class="btn btn-outline-light btn-sm" type="submit">Déconnexion</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Connexion</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

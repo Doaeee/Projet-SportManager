@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Membre | SportManager{% endblock %}
+
+{% block content %}
+  <div class="card page-hero mb-3">
+    <div class="card-body d-flex flex-wrap gap-2 align-items-center justify-content-between">
+      <div>
+        <h1 class="h4 mb-1"><i class="bi bi-person-heart"></i> Dashboard membre</h1>
+        <div class="text-muted">Vos dernières inscriptions et paiements</div>
+      </div>
+      <a class="btn btn-primary btn-sm" href="{% url 'membre_planning' %}">
+        <i class="bi bi-calendar-plus"></i> Voir le calendrier
+      </a>
+      <a class="btn btn-outline-primary btn-sm" href="{% url 'membre_abonnements' %}">
+        <i class="bi bi-credit-card-2-front"></i> Abonnements
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-7">
+      <div class="card card-hover">
+        <div class="card-body">
+          <h2 class="h6 mb-3">Inscriptions récentes</h2>
+          <div class="table-responsive">
+            <table class="table table-sm mb-0 align-middle">
+              <thead>
+                <tr>
+                  <th style="width: 56px;"></th>
+                  <th>Séance</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in inscriptions %}
+                  <tr>
+                    <td>
+                      {% if i.seance.activite.image %}
+                        <img
+                          src="{{ i.seance.activite.image.url }}"
+                          alt="Photo {{ i.seance.activite.libelle }}"
+                          class="rounded border"
+                          style="width: 44px; height: 32px; object-fit: cover;"
+                          loading="lazy"
+                        />
+                      {% else %}
+                        <div
+                          class="rounded border bg-light d-flex align-items-center justify-content-center text-muted"
+                          style="width: 44px; height: 32px;"
+                          title="Aucune photo"
+                        >
+                          <i class="bi bi-image"></i>
+                        </div>
+                      {% endif %}
+                    </td>
+                    <td class="fw-semibold">
+                      {{ i.seance.activite.libelle }} — {{ i.seance.dateSeance|date:"d/m/Y" }} {{ i.seance.heureDebut }}
+                    </td>
+                    <td class="text-muted">{{ i.dateInscription }}</td>
+                  </tr>
+                {% empty %}
+                  <tr><td colspan="3" class="text-center text-muted py-3">Aucune inscription.</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card card-hover">
+        <div class="card-body">
+          <h2 class="h6 mb-3">Paiements récents</h2>
+          <div class="table-responsive">
+            <table class="table table-sm mb-0 align-middle">
+              <thead>
+                <tr>
+                  <th>Montant</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in paiements %}
+                  <tr>
+                    <td class="fw-semibold">{{ p.montant }} DHS</td>
+                    <td>
+                      <span class="badge {% if p.statut == 'VALIDE' %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                        {{ p.get_statut_display }}
+                      </span>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr><td colspan="2" class="text-center text-muted py-3">Aucun paiement.</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-hover mt-3">
+        <div class="card-body">
+          <h2 class="h6 mb-3"><i class="bi bi-headset"></i> Aide - Contactez-nous</h2>
+          <p class="text-muted small mb-3">
+            Besoin d'aide ? Notre equipe est disponible pour vous accompagner
+          </p>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2">
+              <i class="bi bi-telephone"></i>
+              <span class="fw-semibold">Telephone :</span>
+              +212 5 24 00 11 22
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-envelope"></i>
+              <span class="fw-semibold">Email :</span>
+              contact@sportmanager-club.ma
+            </li>
+            <li>
+              <i class="bi bi-geo-alt"></i>
+              <span class="fw-semibold">Adresse :</span>
+              25 Avenue Atlas, Quartier Palmier, Marrakech 40000, Maroc
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

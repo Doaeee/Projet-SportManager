@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Mes séances | SportManager{% endblock %}
+
+{% block content %}
+  <div class="card page-hero mb-3">
+    <div class="card-body d-flex flex-wrap gap-2 align-items-center justify-content-between">
+      <div>
+        <h1 class="h4 mb-1">Planning (calendrier)</h1>
+        <div class="text-muted">
+          Semaine du {{ week_start|date:"d/m/Y" }} au {{ week_end|date:"d/m/Y" }} - {{ current_month_year|date:"F Y"|title }}
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <a class="btn btn-outline-secondary btn-sm" href="?week={{ prev_week_iso }}">
+          <i class="bi bi-chevron-left"></i> Semaine précédente
+        </a>
+        <a class="btn btn-outline-secondary btn-sm" href="?week={{ next_week_iso }}">
+          Semaine suivante <i class="bi bi-chevron-right"></i>
+        </a>
+        <span class="badge text-bg-primary" id="live-datetime"></span>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'coach_dashboard' %}">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 row-cols-xxl-7 g-3">
+    {% for day in calendar_days %}
+      <div class="col">
+        <div class="card card-hover calendar-day {% if day.is_today %}border-primary{% endif %}">
+          <div class="card-header bg-white d-flex align-items-center justify-content-between">
+            <div>
+              <div class="fw-semibold">{{ day.label }}</div>
+              <div class="small text-muted">{{ day.date|date:"d/m/Y" }}</div>
+            </div>
+            <span class="badge text-bg-light">{{ day.seances|length }}</span>
+          </div>
+          <div class="card-body p-2">
+            {% for s in day.seances %}
+              <div class="card calendar-event card-hover mb-2">
+                <div class="card-body p-2">
+                  <div class="d-flex align-items-start justify-content-between gap-2">
+                    <div>
+                      <div class="fw-semibold">{{ s.activite.libelle }}</div>
+                      <div class="text-muted small">
+                        <i class="bi bi-clock"></i>
+                        {{ s.heureDebut }} – {{ s.heureFin }}
+                      </div>
+                      <div class="text-muted small">
+                        <i class="bi bi-people"></i>
+                        {{ s.inscriptions_valides_count }} inscrits validés
+                      </div>
+                    </div>
+                    <div class="text-end">
+                      <a class="btn btn-sm btn-outline-primary" href="{% url 'coach_inscrits' s.idSeance %}">
+                        Voir
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% empty %}
+              <div class="text-center text-muted small py-4">Aucune séance.</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    (() => {
+      const liveDateTime = document.getElementById("live-datetime");
+      if (!liveDateTime) return;
+
+      const refresh = () => {
+        const now = new Date();
+        liveDateTime.textContent = now.toLocaleString("fr-FR", {
+          weekday: "short",
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+      };
+
+      refresh();
+      setInterval(refresh, 1000);
+    })();
+  </script>
+{% endblock %}
+

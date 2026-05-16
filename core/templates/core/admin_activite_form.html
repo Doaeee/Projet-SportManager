@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Activité | SportManager{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 mb-0">{% if mode == 'edit' %}Modifier l’activité{% else %}Nouvelle activité{% endif %}</h1>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'admin_activites' %}">Retour</a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label" for="{{ form.libelle.id_for_label }}">Libellé</label>
+          {{ form.libelle }}
+          {% if form.libelle.errors %}<div class="invalid-feedback d-block">{{ form.libelle.errors }}</div>{% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+          {{ form.description }}
+          {% if form.description.errors %}<div class="invalid-feedback d-block">{{ form.description.errors }}</div>{% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="{{ form.typeAcces.id_for_label }}">Type d'accès</label>
+          {{ form.typeAcces }}
+          {% if form.typeAcces.errors %}<div class="invalid-feedback d-block">{{ form.typeAcces.errors }}</div>{% endif %}
+          <div class="form-text">Interne: couvert par abonnement mensuel/annuel. Externe: couvert uniquement par annuel.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="{{ form.tarifMensuel.id_for_label }}">Tarif mensuel</label>
+          {{ form.tarifMensuel }}
+          {% if form.tarifMensuel.errors %}<div class="invalid-feedback d-block">{{ form.tarifMensuel.errors }}</div>{% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="{{ form.image.id_for_label }}">Photo (optionnel)</label>
+          {{ form.image }}
+          {% if form.image.errors %}<div class="invalid-feedback d-block">{{ form.image.errors }}</div>{% endif %}
+          <div class="form-text">Formats conseillés: JPG/PNG. L’image s’affiche côté membre pour donner un aperçu.</div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

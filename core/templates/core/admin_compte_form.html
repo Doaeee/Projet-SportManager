@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Nouveau compte | SportManager{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 mb-0">Nouveau compte</h1>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'admin_comptes' %}">Retour</a>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label" for="{{ form.login.id_for_label }}">Login</label>
+            {{ form.login }}
+            {% if form.login.errors %}<div class="invalid-feedback d-block">{{ form.login.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-5">
+            <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}<div class="invalid-feedback d-block">{{ form.email.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label" for="{{ form.role.id_for_label }}">Rôle</label>
+            {{ form.role }}
+            {% if form.role.errors %}<div class="invalid-feedback d-block">{{ form.role.errors }}</div>{% endif %}
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="{{ form.password1.id_for_label }}">Mot de passe</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}<div class="invalid-feedback d-block">{{ form.password1.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="{{ form.password2.id_for_label }}">Confirmer</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}<div class="invalid-feedback d-block">{{ form.password2.errors }}</div>{% endif %}
+          </div>
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="alert alert-info mb-0">
+              Remplis la section <strong>Membre</strong> si le rôle est “Membre”, ou <strong>Coach</strong> si le rôle est “Coach”.
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <h2 class="h6 mb-2">Membre</h2>
+            <label class="form-label" for="{{ form.numMembre.id_for_label }}">Numéro</label>
+            {{ form.numMembre }}
+            {% if form.numMembre.errors %}<div class="invalid-feedback d-block">{{ form.numMembre.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-4">
+            <h2 class="h6 mb-2">&nbsp;</h2>
+            <label class="form-label" for="{{ form.dateNaissance.id_for_label }}">Date de naissance</label>
+            {{ form.dateNaissance }}
+            {% if form.dateNaissance.errors %}<div class="invalid-feedback d-block">{{ form.dateNaissance.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-4">
+            <h2 class="h6 mb-2">&nbsp;</h2>
+            <label class="form-label" for="{{ form.dateAdhesion.id_for_label }}">Date d’adhésion</label>
+            {{ form.dateAdhesion }}
+            {% if form.dateAdhesion.errors %}<div class="invalid-feedback d-block">{{ form.dateAdhesion.errors }}</div>{% endif %}
+          </div>
+
+          <div class="col-md-4">
+            <h2 class="h6 mb-2">Coach</h2>
+            <label class="form-label" for="{{ form.numCoach.id_for_label }}">Numéro</label>
+            {{ form.numCoach }}
+            {% if form.numCoach.errors %}<div class="invalid-feedback d-block">{{ form.numCoach.errors }}</div>{% endif %}
+          </div>
+          <div class="col-md-8">
+            <h2 class="h6 mb-2">&nbsp;</h2>
+            <label class="form-label" for="{{ form.specialite.id_for_label }}">Spécialité</label>
+            {{ form.specialite }}
+            {% if form.specialite.errors %}<div class="invalid-feedback d-block">{{ form.specialite.errors }}</div>{% endif %}
+          </div>
+        </div>
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger mt-3">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="mt-3">
+          <button class="btn btn-primary" type="submit">Créer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

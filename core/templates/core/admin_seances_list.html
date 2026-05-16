@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Séances | SportManager{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 mb-0">Séances</h1>
+    <a class="btn btn-primary btn-sm" href="{% url 'admin_seance_create' %}">Nouvelle séance</a>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>Activité</th>
+            <th>Date</th>
+            <th>Horaire</th>
+            <th>Coach</th>
+            <th>Capacité</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in seances %}
+            <tr>
+              <td class="fw-semibold">{{ s.activite.libelle }}</td>
+              <td>{{ s.dateSeance|date:"d/m/Y" }}</td>
+              <td>{{ s.heureDebut }} – {{ s.heureFin }}</td>
+              <td>{{ s.coach.utilisateur.login }}</td>
+              <td>{{ s.capaciteMax }}</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'admin_seance_edit' s.idSeance %}">Modifier</a>
+                <form method="post" action="{% url 'admin_seance_delete' s.idSeance %}" class="d-inline">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-outline-danger" type="submit">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="6" class="text-center text-muted py-4">Aucune séance.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+

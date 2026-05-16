@@ -1,0 +1,238 @@
+:root {
+  --bg-main: #121212;
+  --bg-soft: #1a1a1a;
+  --text-main: #f4f5f7;
+  --text-soft: #b9bec8;
+  --accent: #dfff00;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+.landing-nav {
+  background: rgba(18, 18, 18, 0.9);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.landing-nav .navbar-brand,
+.landing-nav .nav-link {
+  color: var(--text-main);
+}
+
+.landing-nav .nav-link:hover {
+  color: var(--accent);
+}
+
+.hero-section {
+  min-height: 90vh;
+  padding-top: 8rem;
+  display: flex;
+  align-items: center;
+  background-image: url("https://images.unsplash.com/photo-1549060279-7e168fcee0c2?auto=format&fit=crop&w=1800&q=80");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(18, 18, 18, 0.92), rgba(18, 18, 18, 0.6));
+}
+
+.hero-content {
+  z-index: 2;
+}
+
+.hero-kicker {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18rem;
+  font-size: 0.85rem;
+}
+
+.hero-title,
+.section-title {
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.08rem;
+}
+
+.hero-title {
+  font-size: clamp(2.7rem, 8vw, 6rem);
+  line-height: 0.95;
+}
+
+.hero-subtitle {
+  max-width: 700px;
+  color: var(--text-soft);
+}
+
+.btn-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #111;
+  font-weight: 700;
+}
+
+.btn-accent:hover {
+  background: #f1ff73;
+  border-color: #f1ff73;
+}
+
+.section-dark {
+  background: var(--bg-main);
+}
+
+.section-kicker {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12rem;
+  font-size: 0.8rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.glass-card,
+.role-card,
+.price-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border-radius: 1rem;
+}
+
+.visual-tile {
+  position: relative;
+  min-height: 330px;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  background-size: cover;
+  background-position: center;
+}
+
+.tile-activites {
+  background-image: url("https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1400&q=80");
+}
+
+.tile-espaces {
+  background-image: url("https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1400&q=80");
+}
+
+.tile-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.75));
+}
+
+.tile-content {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1;
+}
+
+.tile-label {
+  display: block;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.06rem;
+}
+
+.tile-text {
+  color: #d4d7db;
+}
+
+.facility-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.facility-item {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.facility-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.7rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  background: rgba(223, 255, 0, 0.1);
+  border: 1px solid rgba(223, 255, 0, 0.28);
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.facility-name {
+  color: #fff;
+  font-weight: 600;
+}
+
+.facility-text {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.facility-cta {
+  border-color: rgba(223, 255, 0, 0.2);
+}
+
+.plan-name {
+  color: var(--accent);
+  letter-spacing: 0.07rem;
+  font-weight: 700;
+}
+
+.plan-price span {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.price-card ul li {
+  padding: 0.35rem 0;
+  color: var(--text-soft);
+}
+
+.price-card.highlight {
+  border-color: rgba(223, 255, 0, 0.6);
+  box-shadow: 0 0 0 1px rgba(223, 255, 0, 0.3), 0 0 30px rgba(223, 255, 0, 0.12);
+}
+
+#rdv .form-control,
+#rdv .form-control:focus {
+  background: #1d1d1d;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: none;
+}
+
+.text-light-subtle {
+  color: var(--text-soft) !important;
+}
+
+@media (max-width: 991.98px) {
+  .hero-section {
+    min-height: 80vh;
+  }
+}
